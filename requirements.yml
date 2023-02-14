@@ -1,0 +1,2 @@
+- src: /roles
+  name: ansible-docker
