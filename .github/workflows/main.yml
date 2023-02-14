@@ -34,7 +34,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install ansible=={{ matrix.ansible_version }}
+        pip install ansible=="{{ matrix.ansible_version }}"
 
     - name: Run tests
       run: |
