@@ -1,0 +1,33 @@
+---
+# Role name: docker
+# Role for installing Docker on CentOS
+
+- name: Ensure Docker dependencies are installed
+  package:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
+
+- name: Set up the Docker repository
+  shell: |
+    sudo yum-config-manager \
+        --add-repo \
+        https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install Docker
+  package:
+    name: docker-ce
+    state: present
+
+- name: Start and enable the Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Verify Docker installation
+  shell: docker run hello-world
