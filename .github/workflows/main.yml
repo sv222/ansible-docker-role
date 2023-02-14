@@ -24,18 +24,18 @@ jobs:
     name: Test on ${{ matrix.os }} with Ansible ${{ matrix.ansible_version }}
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
 
-    - name: Install dependencies
-      run: |
-        pip install ansible==${{ matrix.ansible_version }}
+      - name: Install dependencies
+        run: |
+          pip install ansible==${{ matrix.ansible_version }}
 
-    - name: Run tests
-      run: |
-        ansible-galaxy install --roles-path=roles -r requirements.yml
+      - name: Run tests
+        run: |
+          ansible-galaxy install -r requirements.yml
