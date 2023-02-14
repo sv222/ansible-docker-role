@@ -44,7 +44,7 @@ Here's an example playbook that uses this role:
 To use this role from Ansible Galaxy, add the following to your requirements.yml file:
 
 ```yaml
-- src: /roles
+- src: https://github.com/sv222/ansible-docker.git
   name: ansible-docker
 ```
 
