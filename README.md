@@ -51,7 +51,7 @@ To use this role from Ansible Galaxy, add the following to your requirements.yml
 Then run the following command to install the role from the local path:
 
 ```yaml
-ansible-galaxy install -r requirements.yml --roles-path /path/to/roles
+ansible-galaxy install -r requirements.yml --roles-path /roles
 ```
 
 The --roles-path option specifies the directory where the roles will be installed. If the directory doesn't exist, it will be created.
