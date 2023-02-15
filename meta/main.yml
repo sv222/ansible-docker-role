@@ -1,2 +1,2 @@
 dependencies:
-  - { role: ansible-docker, version: "1.0" }
+  - { role: ansible-docker-role, version: "1.0" }

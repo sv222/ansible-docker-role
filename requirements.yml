@@ -1,2 +1,2 @@
-- src: https://github.com/sv222/ansible-docker.git
-  name: ansible-docker
+- src: git+https://github.com/sv222/ansible-docker.git
+  name: ansible-docker-role
