@@ -1,0 +1,7 @@
+galaxy_info:
+  author: sv222
+  description: Install Docker
+  license: MIT
+  min_ansible_version: "2.9"
+  galaxy_tags:
+    - docker
