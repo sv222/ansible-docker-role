@@ -1,4 +1,3 @@
----
 # Role name: docker
 # Role for installing Docker on CentOS
 
@@ -10,7 +9,7 @@
       - lvm2
       - containerd.io
     state: present
-    disable_excludes: main
+    exclude: containerd.io
 
 - name: Set up the Docker repository
   yum_repository:
