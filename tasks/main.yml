@@ -1,29 +1,41 @@
 ---
 - name: Install required packages
-  yum:
+  become: true
+  package:
     name:
       - yum-utils
       - device-mapper-persistent-data
       - lvm2
-    state: present
+      - python3-pip
+      - python3-devel
+    state: latest
 
-- name: Add Docker repository
-  yum_repository:
+- name: Add Docker CE repo
+  become: true
+  community.general.yum_repository:
     name: docker-ce
     description: Docker CE Stable - $basearch
     baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
-    enabled: yes
     gpgcheck: yes
     gpgkey: https://download.docker.com/linux/centos/gpg
-    sslverify: yes
+    enabled: yes
 
 - name: Install Docker CE
+  become: true
   package:
     name: docker-ce
-    state: present
+    state: latest
 
 - name: Start Docker service
+  become: true
   service:
     name: docker
     state: started
     enabled: yes
+
+- name: Add user to Docker group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    group: docker
+    append: yes
