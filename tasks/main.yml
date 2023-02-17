@@ -8,7 +8,9 @@
       - yum-utils
       - device-mapper-persistent-data
       - lvm2
+      - containerd.io
     state: present
+    disable_excludes: main
 
 - name: Set up the Docker repository
   yum_repository:
@@ -18,7 +20,6 @@
     gpgcheck: yes
     gpgkey: https://download.docker.com/linux/centos/gpg
     enabled: yes
-    exclude: containerd.io
   notify: Restart Docker Service
 
 - name: Install Docker
@@ -34,8 +35,3 @@
 
 - name: Verify Docker installation
   command: docker run hello-world
-
-- name: Restart Docker Service
-  service:
-    name: docker
-    state: restarted
