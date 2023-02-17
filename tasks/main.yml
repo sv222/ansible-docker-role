@@ -11,12 +11,14 @@
     state: present
 
 - name: Set up the Docker repository
-  shell: |
-    sudo yum-config-manager \
-        --add-repo \
-        https://download.docker.com/linux/centos/docker-ce.repo
-  args:
-    creates: /etc/yum.repos.d/docker-ce.repo
+  yum_repository:
+    name: docker-ce
+    description: Docker CE Repository
+    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+    gpgcheck: yes
+    gpgkey: https://download.docker.com/linux/centos/gpg
+    enabled: yes
+  notify: Restart Docker Service
 
 - name: Install Docker
   package:
@@ -30,4 +32,4 @@
     enabled: yes
 
 - name: Verify Docker installation
-  shell: docker run hello-world
+  command: docker run hello-world
