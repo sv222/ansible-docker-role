@@ -1,2 +1,0 @@
-dependencies:
-  - { role: ansible-docker-role, version: "1.0" }
