@@ -9,7 +9,6 @@
       - lvm2
       - containerd.io
     state: present
-    exclude: containerd.io
 
 - name: Set up the Docker repository
   yum_repository:
