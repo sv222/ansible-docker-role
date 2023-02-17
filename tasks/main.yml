@@ -1,41 +1,42 @@
 ---
-- name: Install required packages
-  become: true
-  package:
-    name:
-      - yum-utils
-      - device-mapper-persistent-data
-      - lvm2
-      - python3-pip
-      - python3-devel
-    state: latest
+- name: Add Docker GPG key for Ubuntu
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  when: ansible_distribution == 'Ubuntu'
 
-- name: Add Docker CE repo
-  become: true
-  community.general.yum_repository:
+- name: Add Docker GPG key for CentOS
+  rpm_key:
+    key: "https://download.docker.com/linux/centos/gpg"
+    state: present
+  when: ansible_distribution == 'CentOS'
+
+- name: Add Docker YUM repository
+  yum_repository:
     name: docker-ce
-    description: Docker CE Stable - $basearch
-    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
-    gpgcheck: yes
+    description: Docker CE YUM repository
+    baseurl: https://download.docker.com/linux/centos/{{ ansible_distribution_major_version }}/x86_64/stable
     gpgkey: https://download.docker.com/linux/centos/gpg
-    enabled: yes
+    enabled: true
+    gpgcheck: true
+  when: ansible_distribution == 'CentOS'
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker-ce
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: Install Docker CE
-  become: true
   package:
     name: docker-ce
-    state: latest
+    state: present
+  when: ansible_os_family == 'Debian' or ansible_distribution == 'CentOS'
 
-- name: Start Docker service
-  become: true
+- name: Restart Docker Service
   service:
     name: docker
-    state: started
-    enabled: yes
-
-- name: Add user to Docker group
-  become: true
-  user:
-    name: "{{ ansible_user }}"
-    group: docker
-    append: yes
+    state: restarted
+  notify: Restart Docker

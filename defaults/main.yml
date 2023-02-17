@@ -1,2 +1,8 @@
 ---
-docker_version: 23.0.1
+# Default variables for Docker installation
+docker_version: "latest" # The version of Docker to install (default: latest)
+docker_package_state: "present" # The state of the Docker package (default: present)
+
+# Default variables for Docker Compose installation
+docker_compose_version: "latest" # The version of Docker Compose to install (default: latest)
+docker_compose_package_state: "present" # The state of the Docker Compose package (default: present)
