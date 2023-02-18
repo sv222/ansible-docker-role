@@ -33,7 +33,7 @@ Here's an example playbook that uses this role:
 
 ```yaml
 - name: Install Docker
-  hosts: all
+  hosts: localhost
   roles:
   - ansible-docker
 ```
@@ -51,6 +51,12 @@ Then run the following command to install the role from the local path:
 
 ```yaml
 ansible-galaxy install -r requirements.yml
+```
+
+And after:
+
+```shell
+ansible-playbook main.yml
 ```
 
 ## Contributing
