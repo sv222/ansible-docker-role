@@ -2,26 +2,20 @@
 
 This role installs Docker on a Linux system.
 
-## Requirements
+## Install Requirements
 
-- Ansible 2.7 or later
+1. Ansible 2.5+
+2. Python 2.7+
 
-## Supported Distributions
+  ```sh
+apt update && apt install -y python3 && DEBIAN_FRONTEND=noninteractive && apt install -y ansible
+  ```
+
+## Supported Distributions (More in progress)
 
 This role has been tested on the following distributions:
 
 - Ubuntu 18.04, 20.04, 22.04
-- Debian 9, 10
-- CentOS 7, 8, 9
-
-## Role Variables
-
-The following variables are defined in the `defaults/main.yml` file:
-
-```yaml
-docker_version: "latest" # The version of Docker to install (default: latest)
-docker_package_state: "present" # The state of the Docker package (default: present)
-```
 
 ## Dependencies
 
@@ -44,7 +38,7 @@ To use this role from Ansible Galaxy, add the following to your requirements.yml
 
 ```yaml
 - src: https://github.com/sv222/ansible-docker-role
-  name: ansible-docker-role
+  name: ansible-docker
 ```
 
 Then run the following command to install the role from the local path:
