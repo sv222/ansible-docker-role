@@ -1,42 +1,47 @@
 ---
-- name: Add Docker GPG key for Ubuntu
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
-  when: ansible_distribution == 'Ubuntu'
 
-- name: Add Docker GPG key for CentOS
-  rpm_key:
-    key: "https://download.docker.com/linux/centos/gpg"
-    state: present
-  when: ansible_distribution == 'CentOS'
-
-- name: Add Docker YUM repository
-  yum_repository:
-    name: docker-ce
-    description: Docker CE YUM repository
-    baseurl: https://download.docker.com/linux/centos/{{ ansible_distribution_major_version }}/x86_64/stable
-    gpgkey: https://download.docker.com/linux/centos/gpg
-    enabled: true
-    gpgcheck: true
-  when: ansible_distribution == 'CentOS'
-
-- name: Add Docker APT repository
+- name: Add Docker Repository
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+    repo: "deb https://download.docker.com/linux/ubuntu {{ item.codename }} stable"
     state: present
-    filename: docker-ce
-    update_cache: yes
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+  loop:
+    - {codename: bionic, version: 18.04}
+    - {codename: focal, version: 20.04}
+    - {codename: jammy, version: 22.04}
 
-- name: Install Docker CE
-  package:
+- name: Update apt and install docker-ce
+  apt:
     name: docker-ce
-    state: present
-  when: ansible_os_family == 'Debian' or ansible_distribution == 'CentOS'
+    state: latest
+    update_cache: true
+  notify: Restart Docker
 
-- name: Restart Docker Service
-  service:
+- name: Ensure docker service is running and enabled
+  systemd:
     name: docker
-    state: restarted
+    state: started
+    enabled: yes
   notify: Restart Docker
