@@ -8,7 +8,9 @@ This role installs Docker on a Linux system.
 2. Python 2.7+
 
   ```sh
-apt update && apt install -y python3 && DEBIAN_FRONTEND=noninteractive && apt install -y ansible
+apt update \ 
+&& export DEBIAN_FRONTEND=noninteractive \ 
+&& apt install -y python3 ansible git 
   ```
 
 ## Supported Distributions (More in progress)
