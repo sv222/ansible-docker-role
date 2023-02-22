@@ -23,9 +23,11 @@ This role has been tested on the following distributions:
 
 None.
 
-## Example Playbook
+## Using
 
-Here's an example playbook that uses this role:
+1. Create playbook that uses this role:
+
+main.yml:
 
 ```yaml
 - name: Install Docker
@@ -34,22 +36,22 @@ Here's an example playbook that uses this role:
   - ansible-docker
 ```
 
-## Using Ansible Galaxy
+2. Create file with requirements:
 
-To use this role from Ansible Galaxy, add the following to your requirements.yml file:
+requirements.yml:
 
 ```yaml
 - src: https://github.com/sv222/ansible-docker-role
   name: ansible-docker
 ```
 
-Then run the following command to install the role from the local path:
+3. Then run the following command to install the role from the requirements.yml:
 
 ```yaml
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r requirements.yml --force
 ```
 
-And after:
+4. And after run playbook:
 
 ```shell
 ansible-playbook main.yml
