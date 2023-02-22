@@ -42,5 +42,5 @@
 - name: Ensure docker service is running and enabled
   systemd:
     name: docker
-    state: restarted
+    state: started
     enabled: yes
